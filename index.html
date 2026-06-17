@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PhoneLens — Use Your Phone as a Webcam</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="logo">
+      <span class="logo-icon">📷</span>
+      <span class="logo-text">PhoneLens</span>
+    </div>
+    <p class="tagline">Use your phone camera on your PC — no extra software needed</p>
+  </header>
+
+  <!-- Main -->
+  <main class="main">
+
+    <!-- Steps Banner -->
+    <section class="steps-bar">
+      <div class="step" id="step1">
+        <div class="step-num">1</div>
+        <div class="step-label">Connect Phone via USB</div>
+      </div>
+      <div class="step-arrow">→</div>
+      <div class="step" id="step2">
+        <div class="step-num">2</div>
+        <div class="step-label">Enable USB Tethering</div>
+      </div>
+      <div class="step-arrow">→</div>
+      <div class="step" id="step3">
+        <div class="step-num">3</div>
+        <div class="step-label">Select Camera Below</div>
+      </div>
+    </section>
+
+    <!-- Camera Area -->
+    <section class="camera-section">
+      <div class="video-wrapper" id="videoWrapper">
+        <video id="videoFeed" autoplay playsinline muted></video>
+        <canvas id="snapCanvas" style="display:none;"></canvas>
+
+        <!-- Overlay when camera is off -->
+        <div class="video-placeholder" id="videoPlaceholder">
+          <div class="placeholder-icon">📵</div>
+          <p>Camera not started</p>
+          <p class="placeholder-hint">Select a camera source and press <strong>Start Camera</strong></p>
+        </div>
+
+        <!-- Live badge -->
+        <div class="live-badge" id="liveBadge" style="display:none;">
+          <span class="live-dot"></span> LIVE
+        </div>
+
+        <!-- Snapshot flash -->
+        <div class="snap-flash" id="snapFlash"></div>
+      </div>
+
+      <!-- Controls -->
+      <div class="controls">
+
+        <!-- Camera selector -->
+        <div class="control-group">
+          <label for="cameraSelect" class="control-label">Camera Source</label>
+          <select id="cameraSelect" class="control-select">
+            <option value="">— click Scan to detect cameras —</option>
+          </select>
+        </div>
+
+        <!-- Facing mode (mobile) -->
+        <div class="control-group">
+          <label for="facingSelect" class="control-label">Facing Mode</label>
+          <select id="facingSelect" class="control-select">
+            <option value="environment">Rear Camera</option>
+            <option value="user">Front Camera</option>
+          </select>
+        </div>
+
+        <!-- Resolution -->
+        <div class="control-group">
+          <label for="resSelect" class="control-label">Resolution</label>
+          <select id="resSelect" class="control-select">
+            <option value="640x480">480p (640×480)</option>
+            <option value="1280x720" selected>720p HD (1280×720)</option>
+            <option value="1920x1080">1080p Full HD</option>
+            <option value="3840x2160">4K Ultra HD</option>
+          </select>
+        </div>
+
+        <!-- Action buttons -->
+        <div class="btn-row">
+          <button class="btn btn-secondary" id="scanBtn">🔍 Scan Cameras</button>
+          <button class="btn btn-primary" id="startBtn">▶ Start Camera</button>
+          <button class="btn btn-danger" id="stopBtn" disabled>■ Stop</button>
+        </div>
+
+        <div class="btn-row">
+          <button class="btn btn-snap" id="snapBtn" disabled>📸 Snapshot</button>
+          <button class="btn btn-secondary" id="flipBtn">🔄 Flip / Mirror</button>
+          <button class="btn btn-secondary" id="fsBtn">⛶ Fullscreen</button>
+        </div>
+
+      </div>
+
+      <!-- Status bar -->
+      <div class="status-bar">
+        <span id="statusText">Ready. Scan cameras to begin.</span>
+        <span id="resInfo" class="res-info"></span>
+      </div>
+    </section>
+
+    <!-- Snapshot Gallery -->
+    <section class="gallery-section" id="gallerySection" style="display:none;">
+      <h2 class="gallery-title">📁 Snapshots</h2>
+      <div class="gallery" id="gallery"></div>
+    </section>
+
+    <!-- Help / Guide -->
+    <section class="guide-section">
+      <h2 class="guide-title">How to use your phone as a camera</h2>
+      <div class="guide-cards">
+
+        <div class="guide-card">
+          <div class="guide-icon">🔌</div>
+          <h3>USB Cable Method</h3>
+          <ol>
+            <li>Connect your phone to PC via <strong>USB data cable</strong>.</li>
+            <li>On Android: go to <em>Settings → Connected Devices → USB</em> and select <strong>USB Tethering</strong> or <strong>File Transfer</strong>.</li>
+            <li>On iPhone: trust the computer when prompted.</li>
+            <li>Some phones appear as a UVC (webcam) device automatically — click <strong>Scan Cameras</strong> to find it.</li>
+          </ol>
+        </div>
+
+        <div class="guide-card">
+          <div class="guide-icon">📱</div>
+          <h3>Use a Webcam App</h3>
+          <ol>
+            <li>Install <strong>DroidCam</strong> (Android) or <strong>Camo</strong> (iPhone) on your phone.</li>
+            <li>Install the matching desktop client on your PC.</li>
+            <li>Connect via USB or Wi-Fi — your phone appears as a virtual webcam.</li>
+            <li>Click <strong>Scan Cameras</strong> here and select the virtual device.</li>
+          </ol>
+        </div>
+
+        <div class="guide-card">
+          <div class="guide-icon">🌐</div>
+          <h3>Open on Phone Directly</h3>
+          <ol>
+            <li>Open this same page on your phone browser.</li>
+            <li>Press <strong>Start Camera</strong> — your phone's camera streams right here.</li>
+            <li>Works great for quick tests without any extra setup.</li>
+          </ol>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <p>PhoneLens uses the browser's <strong>MediaDevices API</strong> — no data leaves your device.</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
